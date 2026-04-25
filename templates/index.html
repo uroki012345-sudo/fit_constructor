@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitConstructor — собери свой день</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ FitConstructor</h1>
+        <p class="subtitle">Собери свой день: выбери еду и тренировку</p>
+
+        <div class="grid">
+            <!-- Блок с едой -->
+            <div class="section">
+                <h2>🍽️ Еда</h2>
+                <div id="foods-list">
+                    {% for food in foods %}
+                    <div class="card" data-type="food" data-id="{{ food.id }}" data-calories="{{ food.calories }}" data-protein="{{ food.protein }}" data-fat="{{ food.fat }}" data-carbs="{{ food.carbs }}">
+                        <h3>{{ food.name }}</h3>
+                        <p>🔥 {{ food.calories }} ккал | 🥩 {{ food.protein }}г б | 🧈 {{ food.fat }}г ж | 🍚 {{ food.carbs }}г у</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Блок с упражнениями -->
+            <div class="section">
+                <h2>💪 Упражнения</h2>
+                <div id="exercises-list">
+                    {% for ex in exercises %}
+                    <div class="card" data-type="exercise" data-id="{{ ex.id }}" data-calories="{{ ex.calories_burn }}">
+                        <h3>{{ ex.name }}</h3>
+                        <p>🔥 тратится {{ ex.calories_burn }} ккал | 🦵 {{ ex.muscles }} | 🔁 {{ ex.reps }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Панель результатов -->
+        <div class="result-panel">
+            <h2>📊 Итог дня</h2>
+            <div class="stats" id="stats">
+                <div class="stat">
+                    <div class="value" id="total-calories">0</div>
+                    <div class="label">Съедено ккал</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="total-burned">0</div>
+                    <div class="label">Потрачено ккал</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="net-calories">0</div>
+                    <div class="label">Итого ккал</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="total-protein">0</div>
+                    <div class="label">Белки (г)</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="total-fat">0</div>
+                    <div class="label">Жиры (г)</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="total-carbs">0</div>
+                    <div class="label">Углеводы (г)</div>
+                </div>
+            </div>
+            <div id="verdict" class="verdict"></div>
+            <button id="reset-btn" class="reset-btn">🔄 Сбросить всё</button>
+        </div>
+    </div>
+
+   <script src="/static/js/main.js"></script>
+</body>
+</html>

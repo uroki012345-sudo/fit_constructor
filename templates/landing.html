@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitConstructor | Твой фитнес-помощник</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🏋️ FitConstructor</div>
+            <div class="nav-links">
+                <a href="#about">О проекте</a>
+                <a href="#features">Возможности</a>
+                <a href="#motivation">Мотивация</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Собери свой <span class="highlight">идеальный день</span></h1>
+            <p>Правильное питание + эффективные тренировки = твоя лучшая версия</p>
+            <a href="{{ url_for('constructor') }}" class="cta-button">🚀 Начать конструктор</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-badge">
+                <span class="stat-number">14+</span>
+                <span class="stat-label">блюд</span>
+            </div>
+            <div class="stat-badge">
+                <span class="stat-number">20+</span>
+                <span class="stat-label">упражнений</span>
+            </div>
+            <div class="stat-badge">
+                <span class="stat-number">БЖУ</span>
+                <span class="stat-label">полный расчёт</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>О проекте</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">🎯</div>
+                    <h3>Твоя цель</h3>
+                    <p>Похудеть, набрать массу или просто питаться правильно — мы поможем собрать рацион и тренировку под твои задачи.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">📊</div>
+                    <h3>Полный контроль</h3>
+                    <p>Считай калории, белки, жиры и углеводы. Добавляй упражнения и смотри, сколько энергии ты тратишь.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">⚡</div>
+                    <h3>Просто и быстро</h3>
+                    <p>Никакой регистрации. Выбрал еду и тренировку — получил результат за секунду.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section alt-bg">
+        <div class="container">
+            <h2>Что ты можешь сделать</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🍎</div>
+                    <div class="feature-text">
+                        <h3>Выбрать блюда</h3>
+                        <p>Завтрак, обед, ужин и перекусы — более 14 вариантов с полным составом БЖУ</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💪</div>
+                    <div class="feature-text">
+                        <h3>Добавить тренировку</h3>
+                        <p>Более 20 упражнений на все группы мышц с указанием траты калорий</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-text">
+                        <h3>Увидеть итог</h3>
+                        <p>Суммарные калории, баланс БЖУ и вердикт — уложился ли ты в норму</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-text">
+                        <h3>Экспериментировать</h3>
+                        <p>Меняй комбинации, сбрасывай результат и ищи свой идеальный баланс</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="motivation" class="section">
+        <div class="container">
+            <h2>Почему это работает</h2>
+            <div class="motivation-block">
+                <div class="quote">
+                    <p>«Здоровье — это не цель, это образ жизни. Начни с малого: сегодня выбери правильный завтрак, завтра добавь тренировку. FitConstructor поможет тебе сделать первый шаг»</p>
+                    <span class="quote-author">— Твой путь к лучшей версии себя</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>FitConstructor — выпускной проект</p>
+            <p>Правильное питание + спорт = твоё здоровье</p>
+        </div>
+    </footer>
+</body>
+</html>

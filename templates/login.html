@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — FitConstructor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">🏋️ FitConstructor</div>
+                <h2>Вход в аккаунт</h2>
+                <p>Продолжи свой путь к здоровью</p>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" name="password" required placeholder="••••••">
+                </div>
+                
+                <button type="submit" class="auth-btn">Войти</button>
+            </form>
+            
+            <div class="auth-footer">
+                Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
