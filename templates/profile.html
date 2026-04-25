@@ -3,92 +3,632 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль — FitConstructor</title>
+    <title>FitConstructor — Мой профиль</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        .profile-container {
-            max-width: 800px;
-            margin: 50px auto;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .profile-info {
-            background: rgba(0,0,0,0.3);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
         }
-        .norm-form {
-            background: rgba(255,107,53,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+
+        /* Анимированный фон */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
-        .norm-form input {
-            padding: 10px;
+
+        .animated-bg span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Навигация */
+        .navbar {
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
             border-radius: 8px;
-            border: 1px solid #ff6b35;
-            background: rgba(0,0,0,0.3);
-            color: white;
-            width: 150px;
-            margin: 0 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: bold;
         }
-        .btn {
-            display: inline-block;
+
+        .nav-btn-primary {
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: white;
+        }
+
+        .nav-btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Основной контент */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero секция */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(255, 140, 90, 0.05));
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-details h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #ff8c5a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff6b35;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #ff6b35;
+        }
+
+        .edit-btn:hover {
             background: #ff6b35;
             color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-right: 10px;
+        }
+
+        /* Карточки статистики */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 107, 53, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Секция настроек */
+        .settings-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ff6b35;
+        }
+
+        .norm-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .current-norm {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .norm-input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #ff6b35;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 150px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 10px 25px;
             border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            transform: scale(1.05);
+        }
+
+        /* Прогресс-бар */
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #ff6b35, #ff8c5a);
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Сохранённые дни */
+        .saved-days-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .day-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s;
+            border-left: 3px solid #ff6b35;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateX(5px);
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .day-date {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ff6b35;
+        }
+
+        .day-stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-score {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .score-high {
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+        }
+
+        .score-medium {
+            background: rgba(243, 156, 18, 0.3);
+            color: #f39c12;
+        }
+
+        .score-low {
+            background: rgba(231, 76, 60, 0.3);
+            color: #e74c3c;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #aaa;
+        }
+
+        /* Flash сообщения */
+        .flash-messages {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        .flash-message {
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease;
             cursor: pointer;
         }
-        .btn-logout {
-            background: #555;
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-        .btn-save {
-            background: #2ecc71;
+
+        .flash-success {
+            background: rgba(46, 204, 113, 0.9);
+            color: white;
         }
-        .current-norm {
-            font-size: 24px;
-            color: #ff6b35;
-            font-weight: bold;
+
+        .flash-danger {
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+        }
+
+        .flash-info {
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-meta {
+                justify-content: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile-container">
-            <h1>👤 Мой профиль</h1>
-            
-            <div class="profile-info">
-                <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Дата регистрации:</strong> {{ user.created_at.strftime('%d.%m.%Y') if user.created_at else 'Не указана' }}</p>
+    <!-- Анимированный фон -->
+    <div class="animated-bg" id="animated-bg"></div>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="logo">🏋️ FitConstructor</div>
+        <div class="nav-buttons">
+            <a href="{{ url_for('constructor') }}" class="nav-btn nav-btn-primary">🏋️ Конструктор</a>
+            <a href="{{ url_for('logout') }}" class="nav-btn nav-btn-danger">🚪 Выйти</a>
+        </div>
+    </nav>
+
+    <!-- Flash сообщения -->
+    <div class="flash-messages" id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}" onclick="this.remove()">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Основной контент -->
+    <div class="profile-container">
+        <!-- Hero секция -->
+        <div class="hero-section">
+            <div class="profile-header">
+                <div class="avatar-wrapper">
+                    <div class="avatar">
+                        {% if user.username[0]|upper in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+                            🏃‍♂️
+                        {% else %}
+                            🏋️
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="user-details">
+                    <h1>{{ user.username }}</h1>
+                    <div class="user-meta">
+                        <div class="meta-item">📧 {{ user.email }}</div>
+                        <div class="meta-item">📅 {{ user.created_at.strftime('%d.%m.%Y') if user.created_at else 'Не указана' }}</div>
+                        <div class="meta-item">🆔 ID: {{ user.id }}</div>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Форма для изменения нормы калорий -->
-            <div class="norm-form">
-                <h3>⚡ Дневная норма калорий</h3>
-                <p>Текущая норма: <span class="current-norm" id="current-norm">{{ user.daily_norm }}</span> ккал</p>
-                <input type="number" id="daily-norm-input" placeholder="Новая норма" min="500" max="5000">
-                <button class="btn btn-save" id="save-norm-btn">Сохранить норму</button>
-                <p style="font-size: 12px; margin-top: 10px;">💡 Для похудения: 1800-2000 ккал, для набора: 2500-3000 ккал</p>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats-grid">
+            <div class="stat-card" style="animation-delay: 0.1s">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value" id="daily-norm-display">{{ user.daily_norm }}</div>
+                <div class="stat-label">Дневная норма (ккал)</div>
             </div>
-            
-            <a href="{{ url_for('constructor') }}" class="btn">🏋️ Перейти в конструктор</a>
-            <a href="{{ url_for('logout') }}" class="btn btn-logout">🚪 Выйти из аккаунта</a>
+            <div class="stat-card" style="animation-delay: 0.2s">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="saved-count">0</div>
+                <div class="stat-label">Сохранённых дней</div>
+            </div>
+            <div class="stat-card" style="animation-delay: 0.3s">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value" id="avg-progress">0%</div>
+                <div class="stat-label">Средний прогресс</div>
+            </div>
+            <div class="stat-card" style="animation-delay: 0.4s">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="best-day">0%</div>
+                <div class="stat-label">Лучший день</div>
+            </div>
+        </div>
+
+        <!-- Настройка нормы калорий -->
+        <div class="settings-section">
+            <div class="section-title">
+                ⚡ Настройка нормы калорий
+            </div>
+            <div class="norm-control">
+                <span>Текущая норма:</span>
+                <span class="current-norm" id="current-norm">{{ user.daily_norm }}</span>
+                <span>ккал</span>
+                <input type="number" id="daily-norm-input" class="norm-input" placeholder="Новая норма" min="500" max="5000">
+                <button class="btn-save" id="save-norm-btn">💾 Сохранить</button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>🎯 Прогресс выполнения нормы</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <p style="font-size: 12px; margin-top: 15px; color: #aaa;">
+                💡 <strong>Рекомендации:</strong> Для похудения — 1800-2000 ккал, для поддержания — 2200-2400 ккал, для набора массы — 2600-3000 ккал
+            </p>
+        </div>
+
+        <!-- Сохранённые дни -->
+        <div class="saved-days-section">
+            <div class="section-title">
+                💾 История сохранённых дней
+            </div>
+            <div id="saved-days-container" class="days-grid">
+                <div class="empty-state">
+                    ⏳ Загрузка...
+                </div>
+            </div>
         </div>
     </div>
-    
+
     <script>
-        // Сохранение новой нормы калорий
+        // Анимированный фон
+        function createBubbles() {
+            const bg = document.getElementById('animated-bg');
+            for (let i = 0; i < 50; i++) {
+                const bubble = document.createElement('span');
+                const size = Math.random() * 40 + 10;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animationDelay = Math.random() * 15 + 's';
+                bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+                bg.appendChild(bubble);
+            }
+        }
+        createBubbles();
+
+        // Автоматическое скрытие flash сообщений
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(msg => {
+                setTimeout(() => msg.remove(), 3000);
+            });
+        }, 100);
+
+        // Сохранение нормы калорий
         document.getElementById('save-norm-btn').addEventListener('click', async () => {
             const newNorm = document.getElementById('daily-norm-input').value;
             
-            if (newNorm && newNorm >= 500 && newNorm <= 5000) {
+            if (!newNorm) {
+                showNotification('Введите значение нормы', 'danger');
+                return;
+            }
+            
+            if (newNorm >= 500 && newNorm <= 5000) {
                 const response = await fetch('/update_norm', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -98,15 +638,112 @@
                 const data = await response.json();
                 if (data.success) {
                     document.getElementById('current-norm').textContent = newNorm;
-                    alert('✅ Норма калорий обновлена!');
+                    document.getElementById('daily-norm-display').textContent = newNorm;
+                    showNotification('Норма калорий обновлена!', 'success');
                     document.getElementById('daily-norm-input').value = '';
+                    loadSavedDays(); // Обновляем прогресс
                 } else {
-                    alert('❌ Ошибка при сохранении');
+                    showNotification('Ошибка при сохранении', 'danger');
                 }
             } else {
-                alert('❌ Норма должна быть от 500 до 5000 ккал');
+                showNotification('Норма должна быть от 500 до 5000 ккал', 'danger');
             }
         });
+
+        // Показ уведомления
+        function showNotification(message, type) {
+            const container = document.getElementById('flash-messages');
+            const notification = document.createElement('div');
+            notification.className = `flash-message flash-${type}`;
+            notification.textContent = message;
+            notification.onclick = () => notification.remove();
+            container.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Загрузка сохранённых дней
+        async function loadSavedDays() {
+            try {
+                const response = await fetch('/get_saved_combinations');
+                const data = await response.json();
+                const combinations = data.combinations;
+                
+                // Обновляем счётчик
+                document.getElementById('saved-count').textContent = combinations.length;
+                
+                const container = document.getElementById('saved-days-container');
+                
+                if (combinations.length === 0) {
+                    container.innerHTML = '<div class="empty-state">📭 Пока нет сохранённых дней. Создайте их в конструкторе!</div>';
+                    return;
+                }
+                
+                // Расчёт статистики
+                let totalProgress = 0;
+                let bestProgress = 0;
+                
+                const daysHtml = combinations.slice().reverse().map(comb => {
+                    const date = new Date(comb.date);
+                    const formattedDate = date.toLocaleString('ru-RU', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const dailyNorm = comb.daily_norm || {{ user.daily_norm }};
+                    const netCalories = comb.net_calories || 0;
+                    let progress = dailyNorm > 0 ? (netCalories / dailyNorm) * 100 : 0;
+                    progress = Math.min(100, Math.max(0, Math.round(progress)));
+                    
+                    totalProgress += progress;
+                    if (progress > bestProgress) bestProgress = progress;
+                    
+                    let scoreClass = 'score-low';
+                    if (progress >= 80) scoreClass = 'score-high';
+                    else if (progress >= 60) scoreClass = 'score-medium';
+                    
+                    return `
+                        <div class="day-card">
+                            <div class="day-date">📅 ${formattedDate}</div>
+                            <div class="day-stats">
+                                <span>🍽️ ${comb.foods_count || 0} блюд</span>
+                                <span>💪 ${comb.exercises_count || 0} тренировок</span>
+                            </div>
+                            <div class="day-stats">
+                                <span>🔥 ${netCalories} / ${dailyNorm} ккал</span>
+                                <span class="day-score ${scoreClass}">${progress}%</span>
+                            </div>
+                            <div style="font-size: 12px; color: #aaa; margin-top: 8px;">
+                                🍔 ${comb.total_calories || 0} ккал съедено | 🏃‍♂️ ${comb.total_burned || 0} ккал потрачено
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                container.innerHTML = daysHtml;
+                
+                // Обновляем статистику
+                const avgProgress = combinations.length > 0 ? Math.round(totalProgress / combinations.length) : 0;
+                document.getElementById('avg-progress').textContent = avgProgress + '%';
+                document.getElementById('best-day').textContent = bestProgress + '%';
+                
+                // Обновляем прогресс-бар на основе средней нормы
+                const currentNorm = parseInt(document.getElementById('current-norm').textContent);
+                const avgNetCalories = combinations.reduce((sum, comb) => sum + (comb.net_calories || 0), 0) / combinations.length;
+                const avgPercent = currentNorm > 0 ? Math.min(100, (avgNetCalories / currentNorm) * 100) : 0;
+                document.getElementById('progress-fill').style.width = avgPercent + '%';
+                document.getElementById('progress-percent').textContent = Math.round(avgPercent) + '%';
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('saved-days-container').innerHTML = '<div class="empty-state">❌ Ошибка загрузки сохранений</div>';
+            }
+        }
+        
+        // Загружаем сохранения при загрузке страницы
+        loadSavedDays();
     </script>
 </body>
 </html>

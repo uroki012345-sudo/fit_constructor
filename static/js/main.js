@@ -332,7 +332,11 @@ document.addEventListener('DOMContentLoaded', function() {
             updateResults();
         });
     }
-    
+    // Кнопка сохранения дня (НОВЫЙ КОД)
+const saveDayBtn = document.getElementById('save-day-btn');
+if (saveDayBtn) {
+    saveDayBtn.addEventListener('click', saveCurrentDay);
+}
     // Инициализация
     updateResults();
 });
@@ -372,3 +376,55 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+// Функция для сохранения текущего дня
+async function saveCurrentDay() {
+    // Проверка: выбрал ли пользователь хоть что-то?
+    if (selectedFoods.length === 0 && selectedExercises.length === 0) {
+        alert('❌ Выберите хотя бы одно блюдо или упражнение!');
+        return;
+    }
+    
+    try {
+        // Отправляем запрос на сервер
+        const response = await fetch('/save_combination', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                foods: selectedFoods,
+                exercises: selectedExercises
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Показываем красивое уведомление
+            showNotification('✅ ' + data.message, '#2ecc71');
+        } else {
+            alert('❌ Ошибка сохранения');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('❌ Ошибка соединения с сервером');
+    }
+}
+// Функция для показа уведомления
+function showNotification(message, color) {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${color};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        z-index: 9999;
+        animation: slideIn 0.5s ease;
+    `;
+    document.body.appendChild(notification);
+    
+    // Через 3 секунды уведомление исчезает
+    setTimeout(() => notification.remove(), 3000);
+}

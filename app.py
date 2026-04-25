@@ -97,11 +97,10 @@ def landing():
 @login_required
 def constructor():
     return render_template('index.html', foods=foods, exercises=exercises)
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('constructor'))
+        return redirect(url_for('profile'))  # 👈 МЕНЯЕМ: было 'constructor', стало 'profile'
     
     if request.method == 'POST':
         email = request.form.get('email')
@@ -112,7 +111,7 @@ def login():
         if user and user.check_password(password):
             login_user(user)
             flash('Успешный вход!', 'success')
-            return redirect(url_for('constructor'))
+            return redirect(url_for('profile'))  # 👈 МЕНЯЕМ: было 'constructor', стало 'profile'
         else:
             flash('Неверный email или пароль', 'danger')
     
@@ -121,8 +120,7 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('constructor'))
-    
+        return redirect(url_for('profile'))
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
@@ -134,9 +132,10 @@ def register():
             flash('Пароли не совпадают', 'danger')
             return render_template('register.html')
         
-        if len(password) < 6:
+        if len(password) < 6:  # 👈 ДОБАВИЛИ проверку длины
             flash('Пароль должен быть минимум 6 символов', 'danger')
             return render_template('register.html')
+        
         if User.query.filter_by(username=username).first():
             flash('Имя пользователя уже занято', 'danger')
             return render_template('register.html')
@@ -152,7 +151,7 @@ def register():
         db.session.commit()
         
         flash('Регистрация успешна! Теперь войдите в аккаунт.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('login'))  # 👈 НЕ ИЗМЕНЯЕТСЯ: после регистрации на страницу входа
     
     return render_template('register.html')
 
@@ -171,6 +170,8 @@ def profile():
 @app.route('/save_combination', methods=['POST'])
 @login_required
 def save_combination():
+    from datetime import datetime
+    
     data = request.get_json()
     foods_selected = data.get('foods', [])
     exercises_selected = data.get('exercises', [])
@@ -178,18 +179,38 @@ def save_combination():
     # Получаем текущие сохранения
     saved = json.loads(current_user.saved_combinations) if current_user.saved_combinations else []
     
-    # Добавляем новую комбинацию
+    # Рассчитываем данные для сохранения
+    total_calories = 0
+    total_burned = 0
+    
+    for food in foods:
+        if food['id'] in foods_selected:
+            total_calories += food['calories']
+    
+    for ex in exercises:
+        if ex['id'] in exercises_selected:
+            total_burned += ex['calories_burn']
+    
+    net_calories = total_calories - total_burned
+    
+    # Добавляем новую комбинацию с полной информацией
     new_combination = {
         'id': len(saved) + 1,
-        'date': datetime.now().strftime('%Y-%m-%d %H:%M'),  
+        'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'foods': foods_selected,
-        'exercises': exercises_selected
+        'exercises': exercises_selected,
+        'foods_count': len(foods_selected),
+        'exercises_count': len(exercises_selected),
+        'net_calories': net_calories,
+        'daily_norm': current_user.daily_norm,
+        'total_calories': total_calories,
+        'total_burned': total_burned
     }
     saved.append(new_combination)
     
-    # Сохраняем последние 10 комбинаций
-    if len(saved) > 10:
-        saved = saved[-10:]
+    # Сохраняем последние 20 комбинаций
+    if len(saved) > 20:
+        saved = saved[-20:]
     
     current_user.saved_combinations = json.dumps(saved)
     db.session.commit()
