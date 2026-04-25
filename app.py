@@ -30,9 +30,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    
-    # Сохранённые комбинации (храним как JSON строку)
     saved_combinations = db.Column(db.Text, default='[]')
+    
+    # 👇 НОВОЕ ПОЛЕ - дневная норма калорий
+    daily_norm = db.Column(db.Integer, default=2200)
     
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -200,7 +201,6 @@ def save_combination():
 def get_saved_combinations():
     saved = json.loads(current_user.saved_combinations) if current_user.saved_combinations else []
     return jsonify({'combinations': saved})
-
 @app.route('/calculate', methods=['POST'])
 @login_required
 def calculate():
@@ -227,7 +227,9 @@ def calculate():
             total_burned += ex['calories_burn']
     
     net_calories = total_calories - total_burned
-    daily_norm = 2200
+    
+    # 👇 ИСПРАВЛЕНО: используем норму из профиля пользователя
+    daily_norm = current_user.daily_norm
     
     return jsonify({
         'total_calories': total_calories,
@@ -239,6 +241,20 @@ def calculate():
         'daily_norm': daily_norm,
         'is_ok': net_calories <= daily_norm
     })
+# Добавьте новый маршрут после других маршрутов
+
+@app.route('/update_norm', methods=['POST'])
+@login_required
+def update_norm():
+    data = request.get_json()
+    new_norm = data.get('daily_norm')
+    
+    if new_norm and 500 <= new_norm <= 5000:  # Валидация
+        current_user.daily_norm = new_norm
+        db.session.commit()
+        return jsonify({'success': True, 'daily_norm': new_norm})
+    
+    return jsonify({'success': False, 'error': 'Некорректное значение'}), 400
 
 # Создание базы данных
 with app.app_context():

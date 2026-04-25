@@ -17,7 +17,8 @@
                 <h2>🍽️ Еда</h2>
                 <div id="foods-list">
                     {% for food in foods %}
-                    <div class="card" data-type="food" data-id="{{ food.id }}" data-calories="{{ food.calories }}" data-protein="{{ food.protein }}" data-fat="{{ food.fat }}" data-carbs="{{ food.carbs }}">
+                    <!-- 👇 В ЭТУ СТРОКУ ДОБАВЛЕН АТРИБУТ data-meal="{{ food.type }}" -->
+                    <div class="card" data-type="food" data-id="{{ food.id }}" data-meal="{{ food.type }}">
                         <h3>{{ food.name }}</h3>
                         <p>🔥 {{ food.calories }} ккал | 🥩 {{ food.protein }}г б | 🧈 {{ food.fat }}г ж | 🍚 {{ food.carbs }}г у</p>
                     </div>
@@ -30,7 +31,7 @@
                 <h2>💪 Упражнения</h2>
                 <div id="exercises-list">
                     {% for ex in exercises %}
-                    <div class="card" data-type="exercise" data-id="{{ ex.id }}" data-calories="{{ ex.calories_burn }}">
+                    <div class="card" data-type="exercise" data-id="{{ ex.id }}">
                         <h3>{{ ex.name }}</h3>
                         <p>🔥 тратится {{ ex.calories_burn }} ккал | 🦵 {{ ex.muscles }} | 🔁 {{ ex.reps }}</p>
                     </div>
@@ -73,6 +74,6 @@
         </div>
     </div>
 
-   <script src="/static/js/main.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

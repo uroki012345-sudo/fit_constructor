@@ -19,6 +19,21 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+        .norm-form {
+            background: rgba(255,107,53,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .norm-form input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ff6b35;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            width: 150px;
+            margin: 0 10px;
+        }
         .btn {
             display: inline-block;
             background: #ff6b35;
@@ -27,9 +42,19 @@
             text-decoration: none;
             border-radius: 8px;
             margin-right: 10px;
+            border: none;
+            cursor: pointer;
         }
         .btn-logout {
             background: #555;
+        }
+        .btn-save {
+            background: #2ecc71;
+        }
+        .current-norm {
+            font-size: 24px;
+            color: #ff6b35;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -44,9 +69,44 @@
                 <p><strong>Дата регистрации:</strong> {{ user.created_at.strftime('%d.%m.%Y') if user.created_at else 'Не указана' }}</p>
             </div>
             
+            <!-- Форма для изменения нормы калорий -->
+            <div class="norm-form">
+                <h3>⚡ Дневная норма калорий</h3>
+                <p>Текущая норма: <span class="current-norm" id="current-norm">{{ user.daily_norm }}</span> ккал</p>
+                <input type="number" id="daily-norm-input" placeholder="Новая норма" min="500" max="5000">
+                <button class="btn btn-save" id="save-norm-btn">Сохранить норму</button>
+                <p style="font-size: 12px; margin-top: 10px;">💡 Для похудения: 1800-2000 ккал, для набора: 2500-3000 ккал</p>
+            </div>
+            
             <a href="{{ url_for('constructor') }}" class="btn">🏋️ Перейти в конструктор</a>
             <a href="{{ url_for('logout') }}" class="btn btn-logout">🚪 Выйти из аккаунта</a>
         </div>
     </div>
+    
+    <script>
+        // Сохранение новой нормы калорий
+        document.getElementById('save-norm-btn').addEventListener('click', async () => {
+            const newNorm = document.getElementById('daily-norm-input').value;
+            
+            if (newNorm && newNorm >= 500 && newNorm <= 5000) {
+                const response = await fetch('/update_norm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ daily_norm: parseInt(newNorm) })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('current-norm').textContent = newNorm;
+                    alert('✅ Норма калорий обновлена!');
+                    document.getElementById('daily-norm-input').value = '';
+                } else {
+                    alert('❌ Ошибка при сохранении');
+                }
+            } else {
+                alert('❌ Норма должна быть от 500 до 5000 ккал');
+            }
+        });
+    </script>
 </body>
 </html>
