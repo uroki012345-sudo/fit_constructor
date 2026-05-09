@@ -272,11 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resultPanel && !document.querySelector('.perfect-day-btn')) {
         const perfectBtn = document.createElement('button');
         perfectBtn.textContent = '⭐ Идеальный день';
-        perfectBtn.className = 'perfect-day-btn';
-        perfectBtn.style.cssText = `
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            margin-left: 10px;
-        `;
+        perfectBtn.className = 'btn btn-primary';
         perfectBtn.addEventListener('click', setPerfectDay);
         
         const resetBtn = document.getElementById('reset-btn');
