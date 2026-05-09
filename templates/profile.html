@@ -144,25 +144,16 @@
             flex-wrap: wrap;
         }
 
-        .avatar-wrapper {
-            position: relative;
-        }
-
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, #ff6b35, #ff8c5a);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3rem;
             box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-            transition: transform 0.3s;
-        }
-
-        .avatar:hover {
-            transform: scale(1.05);
         }
 
         .user-details {
@@ -193,22 +184,7 @@
             font-size: 0.9rem;
         }
 
-        .edit-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #ff6b35;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: #ff6b35;
-        }
-
-        .edit-btn:hover {
-            background: #ff6b35;
-            color: white;
-        }
-
-        /* Карточки статистики */
+        /* Статистика */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -224,28 +200,15 @@
             text-align: center;
             transition: all 0.3s;
             border: 1px solid rgba(255, 107, 53, 0.2);
-            animation: fadeInUp 0.5s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 107, 53, 0.5);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .stat-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
@@ -253,7 +216,6 @@
             font-size: 2rem;
             font-weight: bold;
             color: #ff6b35;
-            margin-bottom: 0.5rem;
         }
 
         .stat-label {
@@ -261,7 +223,7 @@
             color: #aaa;
         }
 
-        /* Секция настроек */
+        /* Настройка нормы */
         .settings-section {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -272,11 +234,8 @@
         }
 
         .section-title {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
             color: #ff6b35;
         }
 
@@ -288,14 +247,14 @@
         }
 
         .current-norm {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #ff6b35;
         }
 
         .norm-input {
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             border: 1px solid #ff6b35;
             background: rgba(0, 0, 0, 0.5);
             color: white;
@@ -304,10 +263,10 @@
 
         .btn-save {
             background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            padding: 10px 25px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
+            color: white;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -365,14 +324,14 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 12px;
             padding: 1rem;
+            cursor: pointer;
             transition: all 0.3s;
             border-left: 3px solid #ff6b35;
-            animation: fadeInUp 0.3s ease;
         }
 
         .day-card:hover {
             transform: translateX(5px);
-            background: rgba(255, 107, 53, 0.1);
+            background: rgba(255, 107, 53, 0.15);
         }
 
         .day-date {
@@ -397,20 +356,9 @@
             font-weight: bold;
         }
 
-        .score-high {
-            background: rgba(46, 204, 113, 0.3);
-            color: #2ecc71;
-        }
-
-        .score-medium {
-            background: rgba(243, 156, 18, 0.3);
-            color: #f39c12;
-        }
-
-        .score-low {
-            background: rgba(231, 76, 60, 0.3);
-            color: #e74c3c;
-        }
+        .score-high { background: rgba(46, 204, 113, 0.3); color: #2ecc71; }
+        .score-medium { background: rgba(243, 156, 18, 0.3); color: #f39c12; }
+        .score-low { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
 
         .empty-state {
             text-align: center;
@@ -418,7 +366,119 @@
             color: #aaa;
         }
 
-        /* Flash сообщения */
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 0;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 140, 90, 0.1));
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #1a1a2e;
+        }
+
+        .modal-header h3 {
+            color: #ff6b35;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #ff6b35;
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h4 {
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+        }
+
+        .detail-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .detail-stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
         .flash-messages {
             position: fixed;
             top: 80px;
@@ -435,57 +495,24 @@
         }
 
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .flash-success {
-            background: rgba(46, 204, 113, 0.9);
-            color: white;
-        }
+        .flash-success { background: rgba(46, 204, 113, 0.9); color: white; }
+        .flash-danger { background: rgba(231, 76, 60, 0.9); color: white; }
+        .flash-info { background: rgba(52, 152, 219, 0.9); color: white; }
 
-        .flash-danger {
-            background: rgba(231, 76, 60, 0.9);
-            color: white;
-        }
-
-        .flash-info {
-            background: rgba(52, 152, 219, 0.9);
-            color: white;
-        }
-
-        /* Адаптивность */
         @media (max-width: 768px) {
-            .profile-container {
-                padding: 1rem;
-            }
-            
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .user-meta {
-                justify-content: center;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .profile-container { padding: 1rem; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Анимированный фон -->
     <div class="animated-bg" id="animated-bg"></div>
 
-    <!-- Навигация -->
     <nav class="navbar">
         <div class="logo">🏋️ FitConstructor</div>
         <div class="nav-buttons">
@@ -494,73 +521,50 @@
         </div>
     </nav>
 
-    <!-- Flash сообщения -->
     <div class="flash-messages" id="flash-messages">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="flash-message flash-{{ category }}" onclick="this.remove()">
-                        {{ message }}
-                    </div>
+                    <div class="flash-message flash-{{ category }}" onclick="this.remove()">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
     </div>
 
-    <!-- Основной контент -->
     <div class="profile-container">
-        <!-- Hero секция -->
         <div class="hero-section">
             <div class="profile-header">
-                <div class="avatar-wrapper">
-                    <div class="avatar">
-                        {% if user.username[0]|upper in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
-                            🏃‍♂️
-                        {% else %}
-                            🏋️
-                        {% endif %}
-                    </div>
-                </div>
+                <div class="avatar">🏋️</div>
                 <div class="user-details">
                     <h1>{{ user.username }}</h1>
                     <div class="user-meta">
                         <div class="meta-item">📧 {{ user.email }}</div>
                         <div class="meta-item">📅 {{ user.created_at.strftime('%d.%m.%Y') if user.created_at else 'Не указана' }}</div>
-                        <div class="meta-item">🆔 ID: {{ user.id }}</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Статистика -->
         <div class="stats-grid">
-            <div class="stat-card" style="animation-delay: 0.1s">
+            <div class="stat-card">
                 <div class="stat-icon">⚡</div>
                 <div class="stat-value" id="daily-norm-display">{{ user.daily_norm }}</div>
                 <div class="stat-label">Дневная норма (ккал)</div>
             </div>
-            <div class="stat-card" style="animation-delay: 0.2s">
+            <div class="stat-card">
                 <div class="stat-icon">📊</div>
                 <div class="stat-value" id="saved-count">0</div>
                 <div class="stat-label">Сохранённых дней</div>
             </div>
-            <div class="stat-card" style="animation-delay: 0.3s">
-                <div class="stat-icon">🎯</div>
-                <div class="stat-value" id="avg-progress">0%</div>
-                <div class="stat-label">Средний прогресс</div>
-            </div>
-            <div class="stat-card" style="animation-delay: 0.4s">
+            <div class="stat-card">
                 <div class="stat-icon">🏆</div>
                 <div class="stat-value" id="best-day">0%</div>
                 <div class="stat-label">Лучший день</div>
             </div>
         </div>
 
-        <!-- Настройка нормы калорий -->
         <div class="settings-section">
-            <div class="section-title">
-                ⚡ Настройка нормы калорий
-            </div>
+            <div class="section-title">⚡ Настройка нормы калорий</div>
             <div class="norm-control">
                 <span>Текущая норма:</span>
                 <span class="current-norm" id="current-norm">{{ user.daily_norm }}</span>
@@ -570,27 +574,32 @@
             </div>
             <div class="progress-container">
                 <div class="progress-label">
-                    <span>🎯 Прогресс выполнения нормы</span>
+                    <span>🎯 Общий прогресс</span>
                     <span id="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="progress-fill"></div>
                 </div>
             </div>
-            <p style="font-size: 12px; margin-top: 15px; color: #aaa;">
-                💡 <strong>Рекомендации:</strong> Для похудения — 1800-2000 ккал, для поддержания — 2200-2400 ккал, для набора массы — 2600-3000 ккал
-            </p>
         </div>
 
-        <!-- Сохранённые дни -->
         <div class="saved-days-section">
-            <div class="section-title">
-                💾 История сохранённых дней
-            </div>
+            <div class="section-title">💾 История сохранённых дней</div>
             <div id="saved-days-container" class="days-grid">
-                <div class="empty-state">
-                    ⏳ Загрузка...
-                </div>
+                <div class="empty-state">⏳ Загрузка...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="dayModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-date">📅 Детали дня</h3>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                Загрузка...
             </div>
         </div>
     </div>
@@ -612,36 +621,29 @@
         }
         createBubbles();
 
-        // Автоматическое скрытие flash сообщений
         setTimeout(() => {
             document.querySelectorAll('.flash-message').forEach(msg => {
                 setTimeout(() => msg.remove(), 3000);
             });
         }, 100);
 
-        // Сохранение нормы калорий
+        // Сохранение нормы
         document.getElementById('save-norm-btn').addEventListener('click', async () => {
             const newNorm = document.getElementById('daily-norm-input').value;
-            
-            if (!newNorm) {
-                showNotification('Введите значение нормы', 'danger');
-                return;
-            }
-            
+            if (!newNorm) { showNotification('Введите значение нормы', 'danger'); return; }
             if (newNorm >= 500 && newNorm <= 5000) {
                 const response = await fetch('/update_norm', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ daily_norm: parseInt(newNorm) })
                 });
-                
                 const data = await response.json();
                 if (data.success) {
                     document.getElementById('current-norm').textContent = newNorm;
                     document.getElementById('daily-norm-display').textContent = newNorm;
                     showNotification('Норма калорий обновлена!', 'success');
                     document.getElementById('daily-norm-input').value = '';
-                    loadSavedDays(); // Обновляем прогресс
+                    loadSavedDays();
                 } else {
                     showNotification('Ошибка при сохранении', 'danger');
                 }
@@ -650,7 +652,6 @@
             }
         });
 
-        // Показ уведомления
         function showNotification(message, type) {
             const container = document.getElementById('flash-messages');
             const notification = document.createElement('div');
@@ -661,6 +662,89 @@
             setTimeout(() => notification.remove(), 3000);
         }
 
+        // Данные из Python (передаём в JS)
+        const foodsData = {{ foods | tojson }};
+        const exercisesData = {{ exercises | tojson }};
+
+        // Функция открытия модального окна с деталями дня
+        function openDayModal(day) {
+            const modal = document.getElementById('dayModal');
+            const modalDate = document.getElementById('modal-date');
+            const modalBody = document.getElementById('modal-body');
+            
+            const date = new Date(day.date);
+            const formattedDate = date.toLocaleString('ru-RU', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+            
+            modalDate.innerHTML = `📅 ${formattedDate}`;
+            
+            // Находим названия выбранных продуктов
+            const selectedFoodsNames = (day.foods || []).map(foodId => {
+                const food = foodsData.find(f => f.id === foodId);
+                return food ? food.name : `Блюдо #${foodId}`;
+            });
+            
+            // Находим названия выбранных упражнений
+            const selectedExercisesNames = (day.exercises || []).map(exId => {
+                const exercise = exercisesData.find(e => e.id === exId);
+                return exercise ? exercise.name : `Упражнение #${exId}`;
+            });
+            
+            const totalCalories = day.total_calories || 0;
+            const totalBurned = day.total_burned || 0;
+            const netCalories = day.net_calories || 0;
+            const dailyNorm = day.daily_norm || parseInt(document.getElementById('current-norm').textContent);
+            const progress = dailyNorm > 0 ? Math.min(100, Math.round((netCalories / dailyNorm) * 100)) : 0;
+            
+            let progressClass = '';
+            if (progress >= 80) progressClass = 'score-high';
+            else if (progress >= 60) progressClass = 'score-medium';
+            else progressClass = 'score-low';
+            
+            modalBody.innerHTML = `
+                <div class="detail-section">
+                    <h4>📊 Итог дня</h4>
+                    <div class="detail-stats">
+                        <div class="detail-stat">🍽️ ${totalCalories} ккал</div>
+                        <div class="detail-stat">💪 ${totalBurned} ккал</div>
+                        <div class="detail-stat">⚡ ${netCalories} ккал</div>
+                    </div>
+                    <div style="margin-top: 10px; text-align: center;">
+                        <span class="day-score ${progressClass}">Выполнение нормы: ${progress}%</span>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>🍽️ Выбранные блюда (${selectedFoodsNames.length})</h4>
+                    ${selectedFoodsNames.length > 0 ? 
+                        selectedFoodsNames.map(name => `<div class="detail-item">🍴 ${name}</div>`).join('') : 
+                        '<div class="detail-item" style="color: #aaa;">Нет выбранных блюд</div>'}
+                </div>
+                
+                <div class="detail-section">
+                    <h4>💪 Выбранные тренировки (${selectedExercisesNames.length})</h4>
+                    ${selectedExercisesNames.length > 0 ? 
+                        selectedExercisesNames.map(name => `<div class="detail-item">🏋️ ${name}</div>`).join('') : 
+                        '<div class="detail-item" style="color: #aaa;">Нет выбранных тренировок</div>'}
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('dayModal').classList.remove('active');
+        }
+
+        // Закрытие модального окна по клику вне его
+        document.getElementById('dayModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('dayModal')) {
+                closeModal();
+            }
+        });
+
         // Загрузка сохранённых дней
         async function loadSavedDays() {
             try {
@@ -668,7 +752,6 @@
                 const data = await response.json();
                 const combinations = data.combinations;
                 
-                // Обновляем счётчик
                 document.getElementById('saved-count').textContent = combinations.length;
                 
                 const container = document.getElementById('saved-days-container');
@@ -678,21 +761,16 @@
                     return;
                 }
                 
-                // Расчёт статистики
-                let totalProgress = 0;
                 let bestProgress = 0;
+                let totalProgress = 0;
                 
                 const daysHtml = combinations.slice().reverse().map(comb => {
                     const date = new Date(comb.date);
                     const formattedDate = date.toLocaleString('ru-RU', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
+                        day: '2-digit', month: '2-digit', year: 'numeric'
                     });
                     
-                    const dailyNorm = comb.daily_norm || {{ user.daily_norm }};
+                    const dailyNorm = comb.daily_norm || parseInt(document.getElementById('current-norm').textContent);
                     const netCalories = comb.net_calories || 0;
                     let progress = dailyNorm > 0 ? (netCalories / dailyNorm) * 100 : 0;
                     progress = Math.min(100, Math.max(0, Math.round(progress)));
@@ -705,18 +783,15 @@
                     else if (progress >= 60) scoreClass = 'score-medium';
                     
                     return `
-                        <div class="day-card">
+                        <div class="day-card" onclick='openDayModal(${JSON.stringify(comb).replace(/'/g, "&#39;")})'>
                             <div class="day-date">📅 ${formattedDate}</div>
                             <div class="day-stats">
                                 <span>🍽️ ${comb.foods_count || 0} блюд</span>
                                 <span>💪 ${comb.exercises_count || 0} тренировок</span>
-                            </div>
-                            <div class="day-stats">
-                                <span>🔥 ${netCalories} / ${dailyNorm} ккал</span>
                                 <span class="day-score ${scoreClass}">${progress}%</span>
                             </div>
-                            <div style="font-size: 12px; color: #aaa; margin-top: 8px;">
-                                🍔 ${comb.total_calories || 0} ккал съедено | 🏃‍♂️ ${comb.total_burned || 0} ккал потрачено
+                            <div style="font-size: 12px; color: #aaa;">
+                                🔥 ${netCalories} / ${dailyNorm} ккал
                             </div>
                         </div>
                     `;
@@ -724,17 +799,10 @@
                 
                 container.innerHTML = daysHtml;
                 
-                // Обновляем статистику
                 const avgProgress = combinations.length > 0 ? Math.round(totalProgress / combinations.length) : 0;
-                document.getElementById('avg-progress').textContent = avgProgress + '%';
                 document.getElementById('best-day').textContent = bestProgress + '%';
-                
-                // Обновляем прогресс-бар на основе средней нормы
-                const currentNorm = parseInt(document.getElementById('current-norm').textContent);
-                const avgNetCalories = combinations.reduce((sum, comb) => sum + (comb.net_calories || 0), 0) / combinations.length;
-                const avgPercent = currentNorm > 0 ? Math.min(100, (avgNetCalories / currentNorm) * 100) : 0;
-                document.getElementById('progress-fill').style.width = avgPercent + '%';
-                document.getElementById('progress-percent').textContent = Math.round(avgPercent) + '%';
+                document.getElementById('progress-fill').style.width = avgProgress + '%';
+                document.getElementById('progress-percent').textContent = avgProgress + '%';
                 
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -742,8 +810,14 @@
             }
         }
         
-        // Загружаем сохранения при загрузке страницы
         loadSavedDays();
+        
+        // Закрытие модального окна по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
