@@ -48,43 +48,97 @@ def load_user(user_id):
 # ==================== ДАННЫЕ О ЕДЕ И УПРАЖНЕНИЯХ ====================
 
 foods = [
-    {"id": 1, "name": "Овсянка с ягодами", "calories": 300, "protein": 12, "fat": 8, "carbs": 45, "type": "breakfast"},
-    {"id": 2, "name": "Куриная грудка с гречкой", "calories": 500, "protein": 40, "fat": 10, "carbs": 60, "type": "lunch"},
-    {"id": 3, "name": "Творог с бананом", "calories": 350, "protein": 25, "fat": 8, "carbs": 40, "type": "snack"},
-    {"id": 4, "name": "Салат с тунцом", "calories": 250, "protein": 20, "fat": 12, "carbs": 15, "type": "dinner"},
-    {"id": 5, "name": "Протеиновый коктейль", "calories": 200, "protein": 30, "fat": 3, "carbs": 12, "type": "snack"},
-    {"id": 6, "name": "Рис с овощами", "calories": 400, "protein": 8, "fat": 5, "carbs": 80, "type": "lunch"},
-    {"id": 7, "name": "Греческий йогурт с мёдом", "calories": 180, "protein": 12, "fat": 5, "carbs": 22, "type": "snack"},
-    {"id": 8, "name": "Запечённый лосось с брокколи", "calories": 550, "protein": 45, "fat": 28, "carbs": 18, "type": "dinner"},
-    {"id": 9, "name": "Смузи из шпината и яблока", "calories": 150, "protein": 4, "fat": 2, "carbs": 32, "type": "breakfast"},
-    {"id": 10, "name": "Макароны из твёрдых сортов с томатами", "calories": 480, "protein": 14, "fat": 9, "carbs": 85, "type": "lunch"},
-    {"id": 11, "name": "Омлет с овощами", "calories": 320, "protein": 22, "fat": 18, "carbs": 12, "type": "breakfast"},
-    {"id": 12, "name": "Говядина с киноа", "calories": 600, "protein": 48, "fat": 22, "carbs": 50, "type": "dinner"},
-    {"id": 13, "name": "Творожная запеканка", "calories": 280, "protein": 20, "fat": 9, "carbs": 30, "type": "snack"},
-    {"id": 14, "name": "Свекольный салат с чесноком", "calories": 120, "protein": 3, "fat": 5, "carbs": 16, "type": "dinner"},
+    # ЗАВТРАКИ (breakfast)
+    {"id": 1, "name": "Овсянка с ягодами и мёдом", "calories": 320, "protein": 12, "fat": 8, "carbs": 52, "type": "breakfast"},
+    {"id": 2, "name": "Омлет с овощами и сыром", "calories": 380, "protein": 24, "fat": 22, "carbs": 15, "type": "breakfast"},
+    {"id": 3, "name": "Смузи из шпината, банана и протеина", "calories": 280, "protein": 25, "fat": 5, "carbs": 35, "type": "breakfast"},
+    {"id": 4, "name": "Творожная запеканка с изюмом", "calories": 350, "protein": 28, "fat": 10, "carbs": 38, "type": "breakfast"},
+    {"id": 5, "name": "Гречневая каша с молоком", "calories": 290, "protein": 10, "fat": 6, "carbs": 48, "type": "breakfast"},
+    {"id": 6, "name": "Панкейки из овсяной муки", "calories": 420, "protein": 15, "fat": 18, "carbs": 52, "type": "breakfast"},
+    {"id": 7, "name": "Яичница с авокадо и тостом", "calories": 450, "protein": 20, "fat": 28, "carbs": 30, "type": "breakfast"},
+    {"id": 8, "name": "Чиа пудинг с кокосовым молоком", "calories": 310, "protein": 8, "fat": 18, "carbs": 32, "type": "breakfast"},
+    
+    # ОБЕДЫ (lunch)
+    {"id": 9, "name": "Куриная грудка с гречкой и овощами", "calories": 520, "protein": 42, "fat": 12, "carbs": 58, "type": "lunch"},
+    {"id": 10, "name": "Рис с тунцом и овощами", "calories": 480, "protein": 35, "fat": 14, "carbs": 52, "type": "lunch"},
+    {"id": 11, "name": "Паста с курицей и песто", "calories": 620, "protein": 38, "fat": 24, "carbs": 68, "type": "lunch"},
+    {"id": 12, "name": "Борщ с говядиной и сметаной", "calories": 380, "protein": 22, "fat": 16, "carbs": 38, "type": "lunch"},
+    {"id": 13, "name": "Греческий салат с курицей", "calories": 410, "protein": 34, "fat": 22, "carbs": 18, "type": "lunch"},
+    {"id": 14, "name": "Лосось с киноа и спаржей", "calories": 580, "protein": 48, "fat": 28, "carbs": 42, "type": "lunch"},
+    {"id": 15, "name": "Индейка с бурым рисом", "calories": 490, "protein": 44, "fat": 12, "carbs": 52, "type": "lunch"},
+    {"id": 16, "name": "Овощное рагу с нутом", "calories": 360, "protein": 16, "fat": 10, "carbs": 52, "type": "lunch"},
+    {"id": 17, "name": "Бургер с говяжьей котлетой", "calories": 680, "protein": 42, "fat": 34, "carbs": 52, "type": "lunch"},
+    {"id": 18, "name": "Том Ям с морепродуктами", "calories": 420, "protein": 32, "fat": 18, "carbs": 28, "type": "lunch"},
+    
+    # УЖИНЫ (dinner)
+    {"id": 19, "name": "Запечённый лосось с брокколи", "calories": 550, "protein": 46, "fat": 30, "carbs": 18, "type": "dinner"},
+    {"id": 20, "name": "Салат с тунцом и яйцом", "calories": 320, "protein": 28, "fat": 18, "carbs": 15, "type": "dinner"},
+    {"id": 21, "name": "Говядина с цветной капустой", "calories": 480, "protein": 42, "fat": 22, "carbs": 22, "type": "dinner"},
+    {"id": 22, "name": "Куриные котлеты с греческим салатом", "calories": 430, "protein": 38, "fat": 20, "carbs": 24, "type": "dinner"},
+    {"id": 23, "name": "Творог с зеленью и огурцом", "calories": 260, "protein": 28, "fat": 12, "carbs": 14, "type": "dinner"},
+    {"id": 24, "name": "Рыбные палочки с пюре", "calories": 520, "protein": 32, "fat": 24, "carbs": 48, "type": "dinner"},
+    {"id": 25, "name": "Цыплёнок табака с овощами", "calories": 590, "protein": 52, "fat": 28, "carbs": 32, "type": "dinner"},
+    {"id": 26, "name": "Сёмга на пару с рисом", "calories": 480, "protein": 42, "fat": 22, "carbs": 38, "type": "dinner"},
+    
+    # ПЕРЕКУСЫ (snack)
+    {"id": 27, "name": "Протеиновый коктейль", "calories": 200, "protein": 32, "fat": 3, "carbs": 10, "type": "snack"},
+    {"id": 28, "name": "Греческий йогурт с мёдом", "calories": 180, "protein": 14, "fat": 6, "carbs": 22, "type": "snack"},
+    {"id": 29, "name": "Яблоко с арахисовой пастой", "calories": 220, "protein": 6, "fat": 14, "carbs": 24, "type": "snack"},
+    {"id": 30, "name": "Творожный десерт с ягодами", "calories": 250, "protein": 22, "fat": 8, "carbs": 28, "type": "snack"},
+    {"id": 31, "name": "Ореховый микс (30г)", "calories": 180, "protein": 6, "fat": 16, "carbs": 8, "type": "snack"},
+    {"id": 32, "name": "Сырники со сметаной", "calories": 340, "protein": 18, "fat": 16, "carbs": 32, "type": "snack"},
+    {"id": 33, "name": "Банан и горсть миндаля", "calories": 240, "protein": 6, "fat": 14, "carbs": 28, "type": "snack"},
+    {"id": 34, "name": "Протеиновый батончик", "calories": 220, "protein": 18, "fat": 8, "carbs": 20, "type": "snack"},
+    {"id": 35, "name": "Смузи из зелени и яблока", "calories": 150, "protein": 4, "fat": 2, "carbs": 32, "type": "snack"},
 ]
 
 exercises = [
-    {"id": 101, "name": "Приседания", "calories_burn": 50, "muscles": "Ноги, ягодицы", "reps": "3x15", "type": "legs"},
-    {"id": 102, "name": "Отжимания", "calories_burn": 40, "muscles": "Грудь, трицепс", "reps": "3x10", "type": "chest"},
-    {"id": 103, "name": "Планка", "calories_burn": 30, "muscles": "Кор, пресс", "reps": "3x30 сек", "type": "core"},
-    {"id": 104, "name": "Выпады", "calories_burn": 45, "muscles": "Ноги", "reps": "3x12", "type": "legs"},
-    {"id": 105, "name": "Скручивания", "calories_burn": 35, "muscles": "Пресс", "reps": "3x20", "type": "core"},
-    {"id": 106, "name": "Берпи", "calories_burn": 70, "muscles": "Всё тело", "reps": "3x10", "type": "fullbody"},
-    {"id": 107, "name": "Выпрыгивания", "calories_burn": 55, "muscles": "Ноги, кардио", "reps": "3x12", "type": "legs"},
-    {"id": 108, "name": "Отжимания узким хватом", "calories_burn": 45, "muscles": "Трицепс, грудь", "reps": "3x8", "type": "chest"},
-    {"id": 109, "name": "Подъём ног лёжа", "calories_burn": 30, "muscles": "Нижний пресс", "reps": "3x15", "type": "core"},
-    {"id": 110, "name": "Боковая планка", "calories_burn": 35, "muscles": "Косые мышцы живота", "reps": "3x20 сек на сторону", "type": "core"},
-    {"id": 111, "name": "Зашагивания на стул", "calories_burn": 40, "muscles": "Ноги, ягодицы", "reps": "3x12", "type": "legs"},
-    {"id": 112, "name": "Мостик ягодичный", "calories_burn": 35, "muscles": "Ягодицы, поясница", "reps": "3x15", "type": "legs"},
-    {"id": 113, "name": "Супермен", "calories_burn": 30, "muscles": "Спина, ягодицы", "reps": "3x10", "type": "back"},
-    {"id": 114, "name": "Альпинист", "calories_burn": 60, "muscles": "Кор, кардио", "reps": "3x20", "type": "fullbody"},
-    {"id": 115, "name": "Прыжки на месте", "calories_burn": 50, "muscles": "Кардио, ноги", "reps": "3x30 сек", "type": "cardio"},
-    {"id": 116, "name": "Боксирование с тенью", "calories_burn": 65, "muscles": "Плечи, кардио", "reps": "3x45 сек", "type": "cardio"},
-    {"id": 117, "name": "Русский твист", "calories_burn": 40, "muscles": "Косые мышцы, пресс", "reps": "3x20", "type": "core"},
-    {"id": 118, "name": "Приседания сумо", "calories_burn": 50, "muscles": "Внутренняя часть бедра", "reps": "3x12", "type": "legs"},
-    {"id": 119, "name": "Обратные отжимания", "calories_burn": 45, "muscles": "Трицепс", "reps": "3x10", "type": "arms"},
-    {"id": 120, "name": "Велосипед лёжа", "calories_burn": 40, "muscles": "Пресс, ноги", "reps": "3x20", "type": "core"},
+    # НОГИ И ЯГОДИЦЫ (legs)
+    {"id": 101, "name": "Приседания с собственным весом", "calories_burn": 50, "muscles": "Ноги, ягодицы", "reps": "3x15", "type": "legs"},
+    {"id": 102, "name": "Выпады с гантелями", "calories_burn": 60, "muscles": "Ноги, ягодицы", "reps": "3x12", "type": "legs"},
+    {"id": 103, "name": "Приседания сумо", "calories_burn": 55, "muscles": "Внутренняя часть бедра", "reps": "3x15", "type": "legs"},
+    {"id": 104, "name": "Мостик ягодичный на одной ноге", "calories_burn": 45, "muscles": "Ягодицы, поясница", "reps": "3x12", "type": "legs"},
+    {"id": 105, "name": "Зашагивания на платформу", "calories_burn": 50, "muscles": "Ноги, ягодицы", "reps": "3x12", "type": "legs"},
+    {"id": 106, "name": "Болгарские выпады", "calories_burn": 65, "muscles": "Ноги, баланс", "reps": "3x10", "type": "legs"},
+    {"id": 107, "name": "Выпрыгивания из приседа", "calories_burn": 70, "muscles": "Ноги, кардио", "reps": "3x10", "type": "legs"},
+    
+    # ГРУДЬ И ТРИЦЕПС (chest/arms)
+    {"id": 108, "name": "Отжимания от пола", "calories_burn": 45, "muscles": "Грудь, трицепс", "reps": "3x12", "type": "chest"},
+    {"id": 109, "name": "Отжимания узким хватом", "calories_burn": 50, "muscles": "Трицепс, грудь", "reps": "3x10", "type": "chest"},
+    {"id": 110, "name": "Жим гантелей лёжа", "calories_burn": 55, "muscles": "Грудь, плечи", "reps": "3x12", "type": "chest"},
+    {"id": 111, "name": "Разведение гантелей лёжа", "calories_burn": 40, "muscles": "Грудные мышцы", "reps": "3x15", "type": "chest"},
+    {"id": 112, "name": "Отжимания на брусьях", "calories_burn": 60, "muscles": "Трицепс, грудь", "reps": "3x8", "type": "chest"},
+    {"id": 113, "name": "Французский жим гантели", "calories_burn": 40, "muscles": "Трицепс", "reps": "3x12", "type": "arms"},
+    
+    # ПРЕСС И КОР (core)
+    {"id": 114, "name": "Планка классическая", "calories_burn": 35, "muscles": "Кор, пресс", "reps": "3x40 сек", "type": "core"},
+    {"id": 115, "name": "Скручивания на пресс", "calories_burn": 40, "muscles": "Верхний пресс", "reps": "3x20", "type": "core"},
+    {"id": 116, "name": "Подъём ног в висе", "calories_burn": 50, "muscles": "Нижний пресс", "reps": "3x12", "type": "core"},
+    {"id": 117, "name": "Русский твист с весом", "calories_burn": 45, "muscles": "Косые мышцы", "reps": "3x20", "type": "core"},
+    {"id": 118, "name": "Велосипед лёжа", "calories_burn": 45, "muscles": "Пресс, ноги", "reps": "3x20", "type": "core"},
+    {"id": 119, "name": "Боковая планка", "calories_burn": 35, "muscles": "Косые мышцы", "reps": "3x30 сек", "type": "core"},
+    {"id": 120, "name": "Альпинист", "calories_burn": 65, "muscles": "Кор, кардио", "reps": "3x20", "type": "core"},
+    {"id": 121, "name": "Вакуум живота", "calories_burn": 20, "muscles": "Глубокие мышцы", "reps": "3x15 сек", "type": "core"},
+    
+    # СПИНА (back)
+    {"id": 122, "name": "Супермен (гиперэкстензия)", "calories_burn": 35, "muscles": "Спина, ягодицы", "reps": "3x12", "type": "back"},
+    {"id": 123, "name": "Тяга гантели к поясу", "calories_burn": 50, "muscles": "Широчайшие", "reps": "3x12", "type": "back"},
+    {"id": 124, "name": "Подтягивания обратным хватом", "calories_burn": 70, "muscles": "Спина, бицепс", "reps": "3x6", "type": "back"},
+    {"id": 125, "name": "Лодочка лёжа на животе", "calories_burn": 30, "muscles": "Поясница, ягодицы", "reps": "3x12", "type": "back"},
+    
+    # ПЛЕЧИ (shoulders)
+    {"id": 126, "name": "Жим гантелей сидя", "calories_burn": 50, "muscles": "Дельты, плечи", "reps": "3x12", "type": "shoulders"},
+    {"id": 127, "name": "Разведение гантелей в стороны", "calories_burn": 40, "muscles": "Средняя дельта", "reps": "3x15", "type": "shoulders"},
+    {"id": 128, "name": "Тяга штанги к подбородку", "calories_burn": 45, "muscles": "Трапеция, дельты", "reps": "3x12", "type": "shoulders"},
+    
+    # КАРДИО И ПОЛНОТЕЛОВЫЕ (cardio/fullbody)
+    {"id": 129, "name": "Берпи", "calories_burn": 80, "muscles": "Всё тело", "reps": "3x10", "type": "fullbody"},
+    {"id": 130, "name": "Прыжки на скакалке", "calories_burn": 100, "muscles": "Кардио, ноги", "reps": "5 мин", "type": "cardio"},
+    {"id": 131, "name": "Бег на месте с высоким подниманием колен", "calories_burn": 70, "muscles": "Кардио, ноги", "reps": "3x30 сек", "type": "cardio"},
+    {"id": 132, "name": "Боксирование с тенью", "calories_burn": 75, "muscles": "Плечи, кардио", "reps": "3x45 сек", "type": "cardio"},
+    {"id": 133, "name": "Джампинг Джекс", "calories_burn": 60, "muscles": "Кардио, всё тело", "reps": "3x30 сек", "type": "cardio"},
+    {"id": 134, "name": "Скалолаз (попеременные подтягивания колен)", "calories_burn": 70, "muscles": "Кор, кардио", "reps": "3x20", "type": "fullbody"},
+    {"id": 135, "name": "Толчки санок", "calories_burn": 90, "muscles": "Ноги, кардио", "reps": "4x20м", "type": "fullbody"},
 ]
 
 # ==================== МАРШРУТЫ ====================
